@@ -29,3 +29,25 @@ Here are some important settings you should pay attention to :
 - set `BUILD_opencv_world` on.
 - set `OPENCV_EXTRA_MOUDLES_PATH` to `you dir/project/opencv_contrib/modules`.
 - set `OPENCV_ENABLE_NOFREE` on if you want to use nonfree algorithms such as `SIFT` and `SURF`.
+
+Then click generate. It spends some time before you can open your project in `you dir/project/cv_vsproject/`. 
+1. Open the `Opencv.sln` and right clike `ALL_BUILD`  in Opencv Solution in `Debug` mode. 
+2. repeat step 1 in `Release` mode.
+3. right click `INSTALL` and build in `Release` mode.
+4. repeat step 3 in `Debug` mode.
+![vs](screenshoot/vs.png)
+
+All the generated file will be included in `install` archive. And the generated binaries are included in direction `x64/v15/`.
+you should set the `install/x64/vc/bin` direction to system environmental variables `path`, which will tell how to find *.DLL at runtime. 
+
+And in your VS project you should add `install/include/` to your project include directories and add `install/x64/vc15/lib` to additional library directiories in Linker. The additional 
+dependancy item `opencv_world410d.lib` in debug mode and `opencv_world450.lib` in release mode.
+![vs](screenshoot/opencv_install.png)
+
+### 1.2 Set up this source
+
+required:
+- Qt ( 5.8+ msvc 2015 or 2017 compiler)
+- Visual Studio IDE ( 2015 or 2017 in my best knowledge. ).
+
+ you can edit this source either by Qt (opening .pro file) or by Visual Studio (opening .sln file). 
