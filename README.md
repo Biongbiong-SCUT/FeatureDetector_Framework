@@ -17,7 +17,7 @@ It would be better to complie opencv by yourself, if you would like to use openc
 
 I found it convinient to compile via Cmake and VS studio and if you follow this pattern,these  useful tools are required:
 
-- cmake 3.1 or above [https://cmake.org/download/]
+- cmake 3.1 or above (https://cmake.org/download/)
 - git
 - VS 2015 or 2017 (or some other versions )
 
@@ -29,8 +29,12 @@ git clone https://github.com/opencv/opencv.git
 git clone https://github.com/opencv/opencv_contrib.git
 ```
 
-and then, open Cmake and set the soure code path
-`you dir/project/opencv` and choose the a dir to build the binaries, such as, `you dir/project/cv_vsproject/`. clike configure and you are required to choose your compiler IDE (VS here), and to choose your platform (remeber win32 by default, and you should choose x64 in my suggestion). after the configure is finish, you will find there are so many configurations for you to custom by yourself. 
+and then, 
+
+1. open Cmake and set the soure code path
+`you dir/project/opencv` and choose a directory to build the binaries, such as, `you dir/project/cv_vsproject/`. 
+2. clike configure and you are required to choose your compiler IDE (VS here), and to choose your platform (remeber win32 by default, and you should choose x64 in my suggestion).
+3. after the configure is finish, you will find there are so many configurations for you to custom by yourself.
 ![cmake](screenshoot/cmake.png)
 
 Here are some important settings you should pay attention to :
@@ -64,3 +68,5 @@ required:
 - Visual Studio IDE ( 2015 or 2017 in my best knowledge. ).
 
  you can edit this source either by Qt (opening .pro file) or by Visual Studio (opening .sln file).
+
+## 2. Extend your Detector
