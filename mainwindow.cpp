@@ -63,11 +63,11 @@ void MainWindow::init()
 
 void MainWindow::createActions()
 {
-	action_load_image_ = new QAction(QIcon("../resource/open.ico"), tr("Load Image"), this);
+	action_load_image_ = new QAction(QIcon("./resource/open.ico"), tr("Load Image"), this);
 	action_load_image_->setStatusTip("Load Image.");
 	connect(action_load_image_, SIGNAL(triggered()), this, SLOT(loadImage()));
 
-	action_save_image_ = new QAction(QIcon("../resource/save.ico"), tr("Save Image"), this);
+	action_save_image_ = new QAction(QIcon("./resource/save.ico"), tr("Save Image"), this);
 	action_save_image_->setStatusTip("Save Image.");
 	connect(action_save_image_, SIGNAL(triggered()), this, SLOT(saveImage()));
 

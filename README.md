@@ -23,7 +23,9 @@ git clone https://github.com/opencv/opencv_contrib.git
 and then, open Cmake and set the soure code path
 `you dir/project/opencv` and choose the a dir to build the binaries, such as, `you dir/project/cv_vsproject/`. clike configure and you are required to choose your compiler IDE (VS here), and to choose your platform (remeber win32 by default, and you should choose x64 in my suggestion). after the configure is finish, you will find there are so many configurations for you to custom by yourself. 
 ![cmake](screenshoot/cmake.png)
+
+
 Here are some important settings you should pay attention to :
-- set `BUILD_opencv_world` on
-- set `OPENCV_EXTRA_MOUDLES_PATH` to `you dir/project/opencv_contrib/modules` 
-- set `OPENCV_ENABLE_NOFREE` on if you want use nonfree algorithms such as `SIFT` and `SURF`
+- set `BUILD_opencv_world` on.
+- set `OPENCV_EXTRA_MOUDLES_PATH` to `you dir/project/opencv_contrib/modules`.
+- set `OPENCV_ENABLE_NOFREE` on if you want to use nonfree algorithms such as `SIFT` and `SURF`.
