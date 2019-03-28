@@ -71,14 +71,14 @@ required:
 
 ## 2. Extend your Detector
 
-The sequence diagram may be helpful to extend your algorithm. A more easy way is just follow what the example algorithm I provided (i.e. [SIFT](algorithms\FeatureDetectorSIFT.cpp)) do.
+The sequence diagram may be helpful to extend your algorithm. A more easy way is just follow what the example algorithm I provided (i.e. [SIFT](algorithms/FeatureDetectorSIFT.cpp)) do.
 
-The files referred to [SIFT](algorithms\FeatureDetectorSIFT.cpp) also should be modified.
+The files referred to [SIFT](algorithms/FeatureDetectorSIFT.cpp) also should be modified.
 
 - [CalculationThread.h](CalculationThread.h)
 - [mainwindow.h](mainwindow.cpp)
 
-![sequence diagram](screenshoot\sequence_diagram.png)
+![sequence diagram](screenshoot/sequence_diagram.png)
 
 ------------------------------
 The code is inspired by [GuidedDenoising](https://github.com/bldeng/GuidedDenoising) by [bldeng](https://github.com/bldeng)
