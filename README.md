@@ -53,7 +53,7 @@ Then click generate. It spends some time before you can open your project in `yo
 ![vs](screenshoot/vs.png)
 
 All the generated file will be included in `install` archive. And the generated binaries are included in direction `x64/v15/`.
-you should set the `install/x64/vc/bin` direction to system environmental variables `path`, which will tell how to find *.DLL at runtime. 
+you should set the `install/x64/vc/bin` direction to system environmental variables `path`, which will tell how to find *.DLL at runtime.
 
 And in your VS project you should add `install/include/` to your project include directories and add `install/x64/vc15/lib` to additional library directiories in Linker. The additional 
 dependancy item `opencv_world410d.lib` in debug mode and `opencv_world450.lib` in release mode.
@@ -70,3 +70,15 @@ required:
  you can edit this source either by Qt (opening .pro file) or by Visual Studio (opening .sln file).
 
 ## 2. Extend your Detector
+
+The sequence diagram may be helpful to extend your algorithm. A more easy way is just follow what the example algorithm I provided (i.e. [SIFT](algorithms\FeatureDetectorSIFT.cpp)) do.
+
+The files referred to [SIFT](algorithms\FeatureDetectorSIFT.cpp) also should be modified.
+
+- [CalculationThread.h](CalculationThread.h)
+- [mainwindow.h](mainwindow.cpp)
+
+![sequence diagram](screenshoot\sequence_diagram.png)
+
+------------------------------
+The code is inspired by [GuidedDenoising](https://github.com/bldeng/GuidedDenoising) by [bldeng](https://github.com/bldeng)
