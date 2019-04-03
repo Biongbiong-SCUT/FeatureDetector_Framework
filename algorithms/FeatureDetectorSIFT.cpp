@@ -8,7 +8,7 @@ FeatureDetectorSIFT::FeatureDetectorSIFT(DataManager * _data_manger, ParameterSe
 
 FeatureDetectorSIFT::~FeatureDetectorSIFT()
 {
-	delete dectector;
+	delete detector;
 }
 
 void FeatureDetectorSIFT::detect()
@@ -21,14 +21,20 @@ void FeatureDetectorSIFT::detect()
 	double sigma;					parameter_set_->getValue(QString("sigma"), sigma);
 	
 	// detect 
-	dectector = cv::xfeatures2d::SIFT::create(nfeatures, nOctave_layers, constrast_threshold, edge_threshold, sigma);
+	detector = cv::xfeatures2d::SIFT::create(nfeatures, nOctave_layers, constrast_threshold, edge_threshold, sigma);
 	std::vector<cv::KeyPoint> keypoints;
 	cv::Mat input = data_manager_->getOriginalMat();
 	cv::Mat output;
 
 	// find interest point
-	dectector->detect(input, keypoints);
-	cv::drawKeypoints(input, keypoints, output);
+	detector->detect(input, keypoints);
+	// *这里可以添加一个默认的
+	cv::drawKeypoints(input, keypoints, output, cv::Scalar::all(-1), 
+		cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+
+	// compute feature descriptors
+	cv::Mat descriptors;
+	detector->compute(input, keypoints, descriptors);
 
 	// set data manager
 	data_manager_->setKeyPoints(keypoints);

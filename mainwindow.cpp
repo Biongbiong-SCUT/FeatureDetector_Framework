@@ -5,7 +5,7 @@
 #include "parameter_set.h"
 #include "parameterset_widget.h"
 #include "CalculationThread.h"
-
+#include "Viewer.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -169,7 +169,7 @@ void MainWindow::showImage()
 	}
 	cv::Mat image = data_manager_->getCurrentMat();
 	QImage qimage = utils::cvMatToQImage(image);
-	image_viewer_ = new QLabel();
+	image_viewer_ = new Viewer();
 	QPixmap pic = QPixmap::fromImage(qimage);
 	if (pic.height() > 320) {
 		pic = pic.scaledToHeight(320);

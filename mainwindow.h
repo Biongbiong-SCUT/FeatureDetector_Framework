@@ -8,6 +8,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include "utils.h"
 
+class Viewer;
 class DataManager;
 class ParameterSet;
 class ParameterSetWidget;
@@ -80,7 +81,7 @@ private:
 
 	// viewer
 	QHBoxLayout *layout_main_;
-	QLabel *image_viewer_;
+	Viewer *image_viewer_;
 
 	// data
 	cv::Mat *image_data_;

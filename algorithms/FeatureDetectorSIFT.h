@@ -12,6 +12,6 @@ public:
 	void detect() override; 
 	void initParameters() override;
 private:
-	cv::Ptr<cv::xfeatures2d::SiftFeatureDetector> dectector;
+	cv::Ptr<cv::xfeatures2d::SiftFeatureDetector> detector;
 };
 
