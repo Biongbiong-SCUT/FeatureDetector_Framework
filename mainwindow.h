@@ -6,6 +6,7 @@
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include "utils.h"
 
 class Viewer;
@@ -54,6 +55,8 @@ private slots:
 
 	void transToOriginal();
 	void transToFeature();
+
+	void showDescriptor(int x, int y);
 private:
 
 	QMenu *menu_file_;
@@ -89,6 +92,10 @@ private:
 	ParameterSet *parameter_set_;
 	ParameterSetWidget *parameter_set_widget_;
 	CalculationThread *calculation_thread_;
+
+	// matting mode
+	cv::Mat *matting_mat1_;
+	cv::Mat *matting_mat2_;
 };
 
 #endif // MAINWINDOW_H

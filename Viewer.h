@@ -9,5 +9,7 @@ public:
 	~Viewer();
 	void mousePressEvent(QMouseEvent * ev);
 	void mouseReleaseEvent(QMouseEvent *ev);
+signals:
+	void mouseClickPosition(int, int);
 };
 

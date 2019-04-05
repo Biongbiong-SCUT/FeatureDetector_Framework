@@ -6,6 +6,7 @@
 #include "parameterset_widget.h"
 #include "CalculationThread.h"
 #include "Viewer.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -170,6 +171,7 @@ void MainWindow::showImage()
 	cv::Mat image = data_manager_->getCurrentMat();
 	QImage qimage = utils::cvMatToQImage(image);
 	image_viewer_ = new Viewer();
+	connect(image_viewer_, SIGNAL(mouseClickPosition(int, int)), this, SLOT(showDescriptor(int, int)));
 	QPixmap pic = QPixmap::fromImage(qimage);
 	if (pic.height() > 320) {
 		pic = pic.scaledToHeight(320);
@@ -244,5 +246,48 @@ void MainWindow::transToFeature()
 {
 	data_manager_->currentToFeatureMat(); needToUpdateViewer();
 }
+
+void MainWindow::showDescriptor(int x, int y)
+{
+	qDebug() << "(x, y) : (" << x << ", " << y << ")";
+	std::vector<cv::KeyPoint> keypoints = data_manager_->getKeyPoints();
+	if (keypoints.empty()) return;
+	
+	// compute all dist
+	std::vector<double> dists;
+	for (std::vector<cv::KeyPoint>::iterator it = keypoints.begin(); it != keypoints.end(); ++it) {
+		double distance = std::powf((x - it->pt.x), 2) + std::powf((y - it->pt.y), 2);
+		dists.push_back(distance);
+	}
+	// find argMin
+	int min_idx = (std::min_element(dists.begin(), dists.end())) - dists.begin();
+	qDebug() << (min_idx);
+	qDebug() << "(x, y) : (" << keypoints[min_idx] .pt.x << ", " << keypoints[min_idx].pt.y << ")";
+	
+	// show nearest point descriptor;
+	cv::KeyPoint nearest_piont = keypoints[min_idx];
+	double min_dist = dists[min_idx];
+	cv::Mat desc = data_manager_->getDescriptors();
+	cv::Mat col;
+	if (min_dist < 900 || min_dist < nearest_piont.size * 200) {
+		
+		col  = desc.row(min_idx);
+		qDebug() << "cool";
+		double maxValue;
+		cv::minMaxLoc(col, 0, &maxValue, 0, 0);
+		int histSize = col.cols;
+		int hpt = col.cols / 2;
+		cv::Mat vectorShow(col.cols, col.cols, CV_8UC3, cv::Scalar(0, 0, 0));
+
+		for (int i = 0; i < histSize; i++) {
+			float value = col.at<float>(i);
+			int intensity = cv::saturate_cast<int>(value * 0.9*(hpt / maxValue));
+			cv::line(vectorShow, cv::Point(i, histSize), cv::Point(i, histSize - intensity), cv::Scalar::all(255));
+		}
+
+		cv::imshow("show decriptor vector", vectorShow);
+	} 
+}
+
 
 

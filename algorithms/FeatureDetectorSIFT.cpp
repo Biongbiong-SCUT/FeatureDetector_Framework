@@ -35,8 +35,9 @@ void FeatureDetectorSIFT::detect()
 	// compute feature descriptors
 	cv::Mat descriptors;
 	detector->compute(input, keypoints, descriptors);
-
+	
 	// set data manager
+	data_manager_->setDescriptors(descriptors);
 	data_manager_->setKeyPoints(keypoints);
 	data_manager_->setFeatureImage(output);
 	data_manager_->currentToFeatureMat();

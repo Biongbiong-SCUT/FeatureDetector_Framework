@@ -15,18 +15,21 @@ public:
 	cv::Mat getCurrentMat() { return current_mat_; };
 
 	std::vector<cv::KeyPoint> getKeyPoints() { return keypoints_; };
+	void setKeyPoints(std::vector<cv::KeyPoint> _keypoints) { keypoints_ = _keypoints; };
 	void setFeatureImage(cv::Mat _feature_mat) { feature_mat_ = _feature_mat; };
 	void setOrinalImage(cv::Mat _original_mat) { original_mat_ = _original_mat; };
-	void setKeyPoints(std::vector<cv::KeyPoint> _keypoints) { keypoints_ = _keypoints; };
 	void setCurrentMat(cv::Mat _current_mat) { current_mat_ = _current_mat; };
 	
 	void currentToOriginalMat() { current_mat_ = original_mat_; }
 	void currentToFeatureMat() { current_mat_ = feature_mat_; }
 
+	void setDescriptors(cv::Mat descriptors) { descriptors_ = descriptors; };
+	cv::Mat getDescriptors() { return descriptors_; };
 private:
 	cv::Mat original_mat_;
 	cv::Mat feature_mat_;
 	cv::Mat current_mat_;
 	std::vector<cv::KeyPoint> keypoints_;
+	cv::Mat descriptors_;
 };
 

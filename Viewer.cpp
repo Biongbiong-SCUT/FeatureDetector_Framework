@@ -13,10 +13,11 @@ Viewer::~Viewer()
 
 void Viewer::mousePressEvent(QMouseEvent * ev)
 {
-	qDebug() << "press";
+	emit mouseClickPosition(ev->x(), ev->y());
+
 }
 
 void Viewer::mouseReleaseEvent(QMouseEvent * ev)
 {
-	qDebug() << "x: " << ev->x() << "y: " << ev->y();
+	
 }
