@@ -14,6 +14,7 @@ class DataManager;
 class ParameterSet;
 class ParameterSetWidget;
 class CalculationThread;
+class LeftDockWidget;
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +27,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+	
+	enum Mode
+	{
+		kDepict,
+		kMatcher
+	};
 
 private:
     Ui::MainWindow *ui;
@@ -57,11 +64,21 @@ private slots:
 	void transToFeature();
 
 	void showDescriptor(int x, int y);
+
+	void changeToMatcherMode();
+	void changeToDetectMode();
+
+	// matcher mode
+	void changeToDM1();
+	void changeToDM2();
+
 private:
 
 	QMenu *menu_file_;
 	QMenu *menu_algorithms_;
-	
+	QMenu *menu_mode_;
+
+
 	QAction *action_load_image_;
 	QAction *action_save_image_;
 	QAction *action_exit_;
@@ -75,6 +92,9 @@ private:
 	// render
 	QAction *action_to_original_;
 	QAction *action_to_feature_;
+
+	// matting mode action
+	QAction *action_to_matting_;
 
 	// tool bar
 	QToolBar *toolbar_file_;
@@ -93,9 +113,21 @@ private:
 	ParameterSetWidget *parameter_set_widget_;
 	CalculationThread *calculation_thread_;
 
-	// matting mode
+	
+	// ˫ͼģʽ
+	QAction *action_to_matcher_mode_;
+	QAction *action_to_detect_mode_;
+
 	cv::Mat *matting_mat1_;
 	cv::Mat *matting_mat2_;
+	LeftDockWidget *left_widget_;
+	
+	DataManager *first_data_manager_;
+	DataManager *second_data_manager_;
+
+	bool isMatcherMode_;
+	bool isalgorithmChoosed_;
+
 };
 
 #endif // MAINWINDOW_H

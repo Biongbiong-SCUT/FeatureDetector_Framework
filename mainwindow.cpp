@@ -6,6 +6,7 @@
 #include "parameterset_widget.h"
 #include "CalculationThread.h"
 #include "Viewer.h"
+#include "LeftDockWidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -48,6 +49,12 @@ MainWindow::~MainWindow()
 	if (parameter_set_ != NULL)
 		delete parameter_set_;
 	parameter_set_ = NULL;
+
+	if (left_widget_ != NULL)
+		delete left_widget_;
+	left_widget_ = NULL;
+
+
 }
 
 void MainWindow::init()
@@ -57,6 +64,13 @@ void MainWindow::init()
 	calculation_thread_ = new CalculationThread();
 	parameter_set_widget_ = NULL;
 	image_viewer_ = NULL;
+	left_widget_ = new LeftDockWidget(this);
+	
+	first_data_manager_ = NULL;
+	second_data_manager_ = NULL;
+
+	isMatcherMode_ = false;
+	isalgorithmChoosed_ = false;
 
 	connect(calculation_thread_, SIGNAL(needToUpdateViewer()), this, SLOT(needToUpdateViewer()));
 	connect(calculation_thread_, SIGNAL(setActionAndWidget(bool, bool)), this, SLOT(showActionAndWidget(bool, bool)));
@@ -95,6 +109,21 @@ void MainWindow::createActions()
 	action_surf_ = new QAction(this);
 	action_orb_ = new QAction(this);
 	action_frens_ = new QAction(this);
+
+
+
+
+	// detect mode
+	action_to_detect_mode_ = new QAction(tr("Detector Mode"), this);
+	action_to_detect_mode_->setStatusTip("Change to Detector Mode");
+	connect(action_to_detect_mode_, SIGNAL(triggered()), this, SLOT(changeToDetectMode()));
+
+
+	// matcher mode
+	action_to_matcher_mode_ = new QAction(tr("Matcher Mode"), this);
+	action_to_matcher_mode_->setStatusTip("Change to Matcher Mode");
+	connect(action_to_matcher_mode_, SIGNAL(triggered()), this, SLOT(changeToMatcherMode()));
+
 }
 
 void MainWindow::createMenus()
@@ -111,6 +140,11 @@ void MainWindow::createMenus()
 	menu_algorithms_->addAction(action_orb_);
 	menu_algorithms_->addAction(action_frens_);
 	menu_algorithms_->setEnabled(false);
+
+	menu_mode_ = menuBar()->addMenu(tr("Mode"));
+	menu_mode_->addAction(action_to_detect_mode_);
+	menu_mode_->addAction(action_to_matcher_mode_);
+	
 }
 
 void MainWindow::createToolBars()
@@ -145,6 +179,7 @@ void MainWindow::closeWidget()
 
 void MainWindow::showWidget()
 {
+	isalgorithmChoosed_ = true;
 	calculation_thread_->initAlgorithm(data_manager_, parameter_set_);
 	parameter_set_widget_ = new ParameterSetWidget(this, parameter_set_);
 
@@ -287,6 +322,56 @@ void MainWindow::showDescriptor(int x, int y)
 
 		cv::imshow("show decriptor vector", vectorShow);
 	} 
+}
+
+void MainWindow::changeToMatcherMode()
+{
+	first_data_manager_ = new DataManager();
+	second_data_manager_ = new DataManager();
+	qDebug() << "show leftDock Widget";
+	connect(left_widget_, SIGNAL(setCurrToImage1()), this, SLOT(changeToDM1()));
+	connect(left_widget_, SIGNAL(setCurrToImage2()), this, SLOT(changeToDM2()));
+
+	addDockWidget(Qt::LeftDockWidgetArea, left_widget_);
+	left_widget_->showWidget();
+}
+
+void MainWindow::changeToDetectMode()
+{
+	if (first_data_manager_ != NULL)
+		delete first_data_manager_;
+	first_data_manager_ = NULL;
+	if (second_data_manager_ != NULL)
+		delete second_data_manager_;
+	second_data_manager_ = NULL;
+
+	if (data_manager_ != NULL)
+		delete data_manager_;
+	data_manager_ = new DataManager();
+	qDebug() << "change to detect mode 这个函数有待实现";
+}
+
+void MainWindow::changeToDM1()
+{
+	
+	data_manager_ = first_data_manager_; 
+	qDebug() << "DM has changed to DM1";
+
+	if (isalgorithmChoosed_)
+		calculation_thread_->initAlgorithm(data_manager_, parameter_set_);
+
+	needToUpdateViewer();
+}
+
+void MainWindow::changeToDM2()
+{
+	data_manager_ = second_data_manager_; 
+	qDebug() << "DM has changed to DM2";
+
+	if (isalgorithmChoosed_)
+		calculation_thread_->initAlgorithm(data_manager_, parameter_set_);
+
+	needToUpdateViewer();
 }
 
 

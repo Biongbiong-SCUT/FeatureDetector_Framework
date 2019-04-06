@@ -10,6 +10,10 @@ public:
 	bool loadImage(std::string filename);
 	bool saveImage(std::string filename);
 
+	// 双图模式
+	bool loadToFirst(std::string filename);
+	bool loadToSecend(std::string filename);
+
 	cv::Mat getOriginalMat() { return original_mat_; };
 	cv::Mat getFeatureMat() { return feature_mat_; };
 	cv::Mat getCurrentMat() { return current_mat_; };
@@ -26,6 +30,7 @@ public:
 	void setDescriptors(cv::Mat descriptors) { descriptors_ = descriptors; };
 	cv::Mat getDescriptors() { return descriptors_; };
 private:
+	// 单图模式
 	cv::Mat original_mat_;
 	cv::Mat feature_mat_;
 	cv::Mat current_mat_;

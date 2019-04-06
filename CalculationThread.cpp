@@ -17,6 +17,10 @@ CalculationThread::~CalculationThread()
 
 void CalculationThread::initAlgorithm(DataManager * _data_manager, ParameterSet * _parameter_set)
 {
+	if (feature_detector_ != NULL)
+		delete feature_detector_;
+	feature_detector_ = NULL;
+
 	switch (algorithm_type_)
 	{
 	case kSIFT:

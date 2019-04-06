@@ -64,6 +64,9 @@
     <ClCompile Include="Viewer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LeftDockWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="CalculationThread.h">
@@ -91,6 +94,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <QtMoc Include="Viewer.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="LeftDockWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
