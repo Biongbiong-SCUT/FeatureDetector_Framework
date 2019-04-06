@@ -30,9 +30,11 @@ public:
 	void showWidget();
 	
 signals:
-	void ApplyMatcher(QString _matcher_base_name);
+	void ApplyMatcher(QString);
 	void setCurrToImage1();
 	void setCurrToImage2();
+	void setCurrToMattingImage();
+	void setCurrToResultImage();
 
 public slots:
 	void OnDefaultClick()
@@ -42,6 +44,8 @@ public slots:
 	void OnApplyClick()
 	{
 		qDebug() << " what is your name?";
+		qDebug() << combo_box_->currentText();
+		emit ApplyMatcher(combo_box_->currentText());
 	};
 	void OnBtn1Click()
 	{
@@ -54,10 +58,23 @@ public slots:
 		qDebug() << "btn 2 clicked!";
 	}
 
+	void OnBtn3Click()
+	{
+		emit setCurrToMattingImage();
+		qDebug() << "btn 3 clicked!";
+	}
+
+	void OnBtn4Click()
+	{
+		emit setCurrToMattingImage();
+		qDebug() << "btn 4 clicked!";
+	}
+
 private:
 	QFrame *Frame_;
 	QVBoxLayout *VBoxLayout_;
 	QVBoxLayout *VBoxLayout_Setting_;
 	QLabel *Label_;
+	QComboBox *combo_box_;
 };
 

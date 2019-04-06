@@ -331,24 +331,27 @@ void MainWindow::changeToMatcherMode()
 	qDebug() << "show leftDock Widget";
 	connect(left_widget_, SIGNAL(setCurrToImage1()), this, SLOT(changeToDM1()));
 	connect(left_widget_, SIGNAL(setCurrToImage2()), this, SLOT(changeToDM2()));
+	connect(left_widget_, SIGNAL(setCurrToMattingImage()), this, SLOT(changeToMatting()));
+	connect(left_widget_, SIGNAL(setCurrToResultImage()), this, SLOT(changeToResult()));
 
+	connect(left_widget_, SIGNAL(ApplyMatcher(QString)), this, SLOT(applyMatching(QString)));
 	addDockWidget(Qt::LeftDockWidgetArea, left_widget_);
 	left_widget_->showWidget();
 }
 
 void MainWindow::changeToDetectMode()
 {
-	if (first_data_manager_ != NULL)
-		delete first_data_manager_;
-	first_data_manager_ = NULL;
-	if (second_data_manager_ != NULL)
-		delete second_data_manager_;
-	second_data_manager_ = NULL;
+	//if (first_data_manager_ != NULL)
+	//	delete first_data_manager_;
+	//first_data_manager_ = NULL;
+	//if (second_data_manager_ != NULL)
+	//	delete second_data_manager_;
+	//second_data_manager_ = NULL;
 
-	if (data_manager_ != NULL)
-		delete data_manager_;
-	data_manager_ = new DataManager();
-	qDebug() << "change to detect mode 这个函数有待实现";
+	//if (data_manager_ != NULL)
+	//	delete data_manager_;
+	//data_manager_ = new DataManager();
+	//qDebug() << "change to detect mode 这个函数有待实现";
 }
 
 void MainWindow::changeToDM1()
@@ -372,6 +375,50 @@ void MainWindow::changeToDM2()
 		calculation_thread_->initAlgorithm(data_manager_, parameter_set_);
 
 	needToUpdateViewer();
+}
+
+void MainWindow::changeToMatting()
+{
+	data_manager_ = datamatting_matting_;
+	qDebug() << "DM has changed to matting";
+
+	needToUpdateViewer();
+}
+
+void MainWindow::changeToResult()
+{
+	data_manager_ = datamanger_result_;
+	qDebug() << "DM has changed to result";
+
+	needToUpdateViewer();
+}
+
+void MainWindow::applyMatching(QString process_name)
+{
+	if (!isalgorithmChoosed_)
+		return;
+	qDebug() << " matching here : " << process_name;
+	/* TODO
+		write matcher algorithm 
+	*/
+	// 1. 获取两张图片
+	calculation_thread_->initAlgorithm(first_data_manager_, parameter_set_);
+	calculation_thread_->start();
+
+	calculation_thread_->initAlgorithm(second_data_manager_, parameter_set_);
+	calculation_thread_->start();
+
+	auto desc1 = first_data_manager_->getDescriptors();
+	auto desc2 = second_data_manager_->getDescriptors();
+	// 2. 如果是 RANSAC 就用 ransac 如果是 kd-tree 就用 kd tree
+
+
+	// 3. 将配对结果写回之中 result matting
+
+
+
+	// 4. 将拼接结果写到     result matching
+
 }
 
 

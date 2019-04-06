@@ -71,6 +71,10 @@ private slots:
 	// matcher mode
 	void changeToDM1();
 	void changeToDM2();
+	void changeToMatting();
+	void changeToResult();
+
+	void applyMatching(QString);
 
 private:
 
@@ -125,6 +129,9 @@ private:
 	DataManager *first_data_manager_;
 	DataManager *second_data_manager_;
 
+
+	DataManager *datamatting_matting_;
+	DataManager *datamanger_result_;
 	bool isMatcherMode_;
 	bool isalgorithmChoosed_;
 
